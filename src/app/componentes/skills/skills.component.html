@@ -1,0 +1,19 @@
+<hr>
+<div class=" my-2 fs-3 fw-bold text-center">
+    Skills
+</div>
+<hr>
+<div class="container">
+    <div class="row justify-content-center">
+        <div [id]="skill.id" (click)="funcionDePrueba(this.skill)" class="col-lg-2 col-8 p-4 m-3 text-center card-header card-skill" *ngFor="let skill of skillList">
+            <img class="bg-dark p-0" [src]="skill.img" style="height: 100px; width: 100px;">
+            <div class="fs-5 fw-bold my-2">
+                {{skill.name}}
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" [attr.aria-valuenow]="skill.progress" aria-valuemin="0" aria-valuemax="100" [attr.style]="skill.progresspercentage"></div>
+              </div>
+        </div>
+
+    </div>
+</div>

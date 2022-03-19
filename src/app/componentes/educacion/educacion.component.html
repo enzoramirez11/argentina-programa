@@ -1,0 +1,35 @@
+<div>
+    <div class="container-fluid">
+        <div>
+            <div class="my-2 fs-3 fw-bold text-center">
+                Educacion
+            </div>
+            <hr>
+        </div>
+        <div class="row justify-content-center">
+            <div *ngFor="let educacion of educacionList" class="col-lg-3 col-12 mb-4 card bg-dark text-center p-0 m-lg-3">
+                <div class="card-header justify-content-center px-4" style="height: 320px;">
+                    <!--Cambiar el modo de poner la imagen del certificado-->                    
+                    <img class="align-self-center card-image-top img-thumbnail m-lg-3 bg-dark rounded-circle " style="width: 125px; height: 125px;" [src]="educacion.img" alt="">
+                    <!--Cambiar el modo de poner la imagen del certificado -->
+                    <div class="fs-5 fw-bold text-center p-2" style="flex: 1 1 auto;">                   
+                        {{educacion.title}}
+                    </div>
+                    <div class="fs-5 text-muted m-2 text-center">
+                        Año: {{educacion.year}}
+                    </div>                              
+                </div>
+                <div class="card-body">                    
+                    <div class="card-description opacity-75 p-4">
+                        {{educacion.description}}
+                    </div>
+                </div>
+                <div class="card-footer gap-4 justify-content-center m-0">
+                    <a class="btn btn-success btn-sm w-100" role="button" target="_blank" rel="noopener noreferrer" [href]="educacion.link">Ver Credencial</a>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</div>

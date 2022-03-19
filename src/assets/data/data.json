@@ -1,0 +1,77 @@
+{
+    "name":"Enzo Ramirez",
+    "position":"Fullstack Developer Jr.",
+    "about": "Informacion personal. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque dolorem sint, aperiam, quod magnam aspernatur incidunt, quasi consequatur velit aliquam harum dolorum minus iusto expedita quia. Reiciendis necessitatibus tempora commodi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam inventore ad culpa? Ullam natus tempore inventore? Repellat ipsam recusandae sapiente! Quae, incidunt tenetur nam pariatur natus hic odio cum quas.",
+    "educacion" :[{
+        "title": "Primera etapa Argentina Programa #SéProgramar",
+        "year": "2021",
+        "school":"Ministerio de Desarrollo Productivo",
+        "description": "La primera etapa de Argentina Programa es un curso introductorio en el que se aprende los fundamentos básicos de la programación para dar los primeros pasos en el mundo tecnológico.",
+        "img": "./assets/img/educacion_logos/APLogo-20-20.png",
+        "link":"https://mumuki.io/argentina-programa/certificates/verify/n6xUMqeFF_KN12WW"
+    },
+    {
+        "title": "Desarrollo Web FullStack con Node.js",
+        "year":"2021",
+        "school":"Min. De Educación e Innovación, Programa Codo a Codo 4.0",
+        "description": "Codo a Codo 4.0 es un Programa de enseñanza en Programación, destinado a personas jóvenes y adultas, que cuenten con título secundario. Tiene como objetivo brindar herramientas que faciliten la inserción laboral en el sector IT, necesarias para mejorar la empleabilidad de las personas.",
+        "img": "./assets/img/educacion_logos/269789151_3001043743442329_8998746516655381292_n.jpg",
+        "link":"https://drive.google.com/file/d/1SSoc1on0aDkVDuIpp_J5SME4vyCj2cKh/view"
+    },
+    {
+        "title": "Desarrollo Web con Javascript",
+        "year":"2020",
+        "school":"Coderhouse",
+        "description":"En este curso se aprende los fundamentos del lenguaje de programación más usado en la actualidad, con el cual es posible crear aplicaciones de todo tipo. Explorará inicialmente herramientas propias del mismo, indagando casos prácticos de aplicación. Reconocer la utilidad de las librerías estudiando jQuery, y cómo aplicar técnicas de desarrollo para apps modernas con AJAX.",
+        "img": "/assets/img/educacion_logos/1640272005412.jpg",
+        "link":"https://www.coderhouse.com/certificados/5f9db759cd371f00914affbe"
+    }],
+    "skills": [{
+        "id" : "html",
+        "name": "HTML5",
+        "img": "./assets/skills/img/html-1.svg",
+        "progress": "75",
+        "progresspercentage": "width:75%"
+    },
+    {   "id" : "css",
+        "name": "CSS3",
+        "img": "./assets/skills/img/css-3.svg",
+        "progress": "60",
+        "progresspercentage": "width:60%"
+    },
+    {
+        "id" : "javascript",
+        "name": "JavaScript",
+        "img": "./assets/skills/img/logo-javascript.svg",
+        "progress": "50",
+        "progresspercentage": "width:50%"
+    },
+    {   
+        "id" : "bootstrap",
+        "name": "Bootstrap",
+        "img": "./assets/skills/img/bootstrap-5-1.svg",
+        "progress": "70",
+        "progresspercentage": "width:70%"
+    },
+    {   
+        "id" : "nodejs",
+        "name": "NodeJS",
+        "img": "./assets/skills/img/nodejs-icon.svg",
+        "progress": "20",
+        "progresspercentage": "width:20%"
+    },
+    {
+        "id" : "typescript",
+        "name": "TypeScript",
+        "img": "./assets/skills/img/typescript.svg",
+        "progress": "30",
+        "progresspercentage": "width:30%"
+    },
+    {
+        "id" : "angular",
+        "name": "Angular",
+        "img": "./assets/skills/img/angular-icon-1.svg",
+        "progress": "30",
+        "progresspercentage": "width:30%"
+    }]
+}
