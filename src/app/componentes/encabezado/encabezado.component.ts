@@ -25,11 +25,10 @@ export class EncabezadoComponent implements OnInit {
       this.datosPorfolio.datosUsuario(localStorage.getItem('token')).subscribe( (res:any) => {
         this.Persona=res;
       })
-      console.log(this.authService.logIn)
     }
     else {
-      this.datosPorfolio.obtenerDatos().subscribe( res => {
-        this.Persona=res.persona[0]
+      this.datosPorfolio.datosUsuario("admin").subscribe( (res:any) => {
+        this.Persona=res;
       })
     }
   }

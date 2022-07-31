@@ -26,10 +26,9 @@ export class EducacionComponent implements OnInit {
       descripcion:['', Validators.required],
       urlCert:['']
     })
-
    }
    completo:boolean;
-   educacionList:any;
+   educacionList:any=[];
   tituloNuevo:string="Titulo";
   anioNuevo:string;
   anioFin:string;
@@ -46,9 +45,9 @@ export class EducacionComponent implements OnInit {
       })
     }
     else {
-      this.datosPorfolio.obtenerDatos().subscribe(data => {
-        this.educacionList=data.educacion
-      });
+      this.datosPorfolio.infoEstudios("admin").subscribe( res => {
+        this.educacionList=res;
+      })
     }
     //Valores modelo de estudios
 
@@ -75,6 +74,7 @@ export class EducacionComponent implements OnInit {
     }
     else {
       this.estudiosForm.controls['fechaFin'].enable();
+      this.estudiosForm.controls['urlCert'].enable();
     }
   }
 
@@ -90,7 +90,31 @@ export class EducacionComponent implements OnInit {
   }
   agregarEd() {
     if (!this.aaa) {
-      this.httpClient.post("http://localhost:8080/personas/crearEducacion/", {
+      if (this.estudiosForm.value.fechaFin<this.estudiosForm.value.fechaInic) {
+        this.httpClient.post("http://localhost:8080/personas/crearEducacion/", {
+      titulo:this.estudiosForm.value.titulo,
+      institucion:this.estudiosForm.value.institucion,
+      url_img:this.estudiosForm.value.imgUrl,
+      descripcion:this.estudiosForm.value.descripcion,
+      fechaInicio:this.estudiosForm.value.fechaInic,
+      fechaFin:'',
+      url_cert:this.estudiosForm.value.urlCert,
+      token: localStorage.getItem("token")
+    },{responseType: 'text'}).subscribe( res => {
+      console.log(res)
+      this.completo=true;
+      document.getElementById('cerrarModall')?.click();
+      setTimeout(() => {
+        this.completo=false;
+      },3500);
+      this.estudiosForm.reset();
+    },
+    (error:any) => {
+      console.log(error)
+    })
+      }
+      else {
+        this.httpClient.post("http://localhost:8080/personas/crearEducacion/", {
       titulo:this.estudiosForm.value.titulo,
       institucion:this.estudiosForm.value.institucion,
       url_img:this.estudiosForm.value.imgUrl,
@@ -111,6 +135,7 @@ export class EducacionComponent implements OnInit {
     (error:any) => {
       console.log(error)
     })
+      }
     }
     else {
       this.httpClient.post("http://localhost:8080/personas/crearEducacion/", {

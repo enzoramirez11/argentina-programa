@@ -38,7 +38,7 @@
                             {{educacion.institucion}}
                         </div> 
                         <div class="fs-6 text-muted d-flex align-items-end m-2 text-center" style="flex: 1 1 auto">
-                            Año: {{educacion.fechaInicio}}{{educacion.fechaFin!=undefined ? " - "+ educacion.fechaFin : ''}}
+                            Año: {{educacion.fechaInicio}}{{educacion.fechaFin.length>0 ? " - "+ educacion.fechaFin : ''}}
                         </div>                              
                     </div>
                     <div class="card-body">                    
@@ -46,8 +46,8 @@
                             {{educacion.descripcion}}
                         </div>
                     </div>
-                    <div *ngIf="educacion.url_cert.length>0" >
-                        <a *ngIf="!autEducacion" class="btn btn-success btn-sm w-100" role="button" target="_blank" rel="noopener noreferrer" [href]="educacion.link">Ver Credencial</a>
+                    <div *ngIf="educacion.url_cert" >
+                        <a *ngIf="!autEducacion" class="btn btn-success btn-sm w-100" role="button" target="_blank" rel="noopener noreferrer" [href]="educacion.url_cert">Ver Credencial</a>
                     </div>
                     <form (submit)="eliminar(educacion.id)" *ngIf="autEducacion" class="card-footer gap-4 justify-content-center m-0" >
                         <button class="btn btn-danger btn-sm w-100" type="submit">Eliminar</button>

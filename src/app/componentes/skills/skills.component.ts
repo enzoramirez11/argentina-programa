@@ -33,10 +33,9 @@ export class SkillsComponent implements OnInit {
       })
     }
     else {
-      this.datosPorfolio.obtenerDatos().subscribe(data => {
-        this.tecnologiaList=data.tecnologias;
-        }
-      )
+      this.datosPorfolio.infoTecnologia("admin").subscribe( res => {
+        this.tecnologiaList=res;
+      })
     }
   }
 
