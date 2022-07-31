@@ -3,6 +3,7 @@
         <div class="modal-content bg-dark" style="width: 380px; border-radius: 10px;">
             <div class="d-flex justify-content-end">
               <button type="button" class="btn-close btn-close-white p-3" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button [hidden]="true" id="cerrarModal" data-bs-dismiss="modal">cerrar</button>
             </div>
             
             
@@ -15,21 +16,33 @@
               <div class="d-flex justify-content-center">
                 <span class="iconify p-3" style="color: #0d6efd;" data-icon="quill:userhappy" data-width="100" data-height="100"></span>
               </div>
-                <form>
+
+              <!-- Formulario ingreso-->
+                <form [formGroup]="login" (submit)="Login()">
                   <div class="form-floating mb-3">
-                    <input type="email" class="form-control" placeholder="nombre@ejemplo.com" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input formControlName="email" type="email" class="form-control" (input)="this.estaRegistrado=true" [class.is-valid]="!this.login.get('email')?.errors?.['required'] && !this.login.get('email')?.errors?.['email']" [class.is-invalid]="!this.estaRegistrado" placeholder="nombre@ejemplo.com" id="exampleInputEmail1" aria-describedby="emailHelp">
                     <label for="exampleInputEmail1" class="form-label text-muted" >Email</label>
+                    <!--<div class="invalid-tooltip start-50 translate-middle w-100 mt-3">El email no se encuentra registrado</div>-->
                   </div>
                   <div class="form-floating mb-3">
-                    <input type="password" class="form-control" placeholder="******" id="exampleInputPassword1">
+                    <input formControlName="password" type="password" class="form-control" placeholder="******" id="exampleInputPassword1">
                     <label for="exampleInputPassword1" class="form-label text-muted">Contraseña</label>
                   </div>
+                  <div *ngIf="!this.estaRegistrado">Los datos ingresados son incorrectos</div>
                   <div class="mb-3 form-check text-start form-switch">
                     <input type="checkbox" role="switch" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label text-light" for="exampleCheck1">Recordarme</label>
                   </div>
                   <div class="">
-                      <button type="submit" class="btn btn-primary w-100" data-bs-dismiss="modal">Login</button>
+                    
+                      <button class="btn btn-primary w-100">
+                        <div *ngIf="!this.loading">Iniciar sesión</div>
+                        <div *ngIf="this.loading">
+                          <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                        </div>
+                      </button>
                   </div>
                 </form>
                 <div class="p-3">
@@ -45,43 +58,74 @@
             </div>
         </div>
     </div>
+
+    <div *ngIf="this.errorLogin" class="fake-toast m-3 align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          Hubo un error, intente nuevamente
+        </div>        
+      </div>
+    </div>
+    
+
 </div>
 
+
+
+
+<!--Registro-->
 <div class="modal fade" id="signupModal" aria-hidden="true" aria-labelledby="signupModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered justify-content-center">
-    <div class="modal-content bg-dark" style="width: 430px; border-radius: 10px;">
-      <div class="d-flex justify-content-end">
+    <div class="modal-content bg-dark" style=" border-radius: 10px;">
+      <div class="modal-header p-2 dark-border">
+        
         <button type="button" class="btn-close btn-close-white p-3" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body align-self-center text-center pt-0" style="width: 370px;">
+      
+    </div>
+      <div class="modal-body pb-0 align-self-center text-center" style="width: 370px;">
         <div class="d-flex justify-content-center">
-          <div class="fs-4 fw-bold">
+          <div class="fs-5 fw-bold">
             Registrarse
           </div>
         </div>
         <div class="d-flex justify-content-center">
-          <span class="iconify p-3" style="color: #0d6efd;" data-icon="quill:compose" data-width="100" data-height="100"></span>
+          <span class="iconify p-3" style="color: #0d6efd;" data-icon="quill:compose" data-width="90" data-height="90"></span>
         </div>
-        <form class="row g-0 needs-validation" novalidate>
+        <!-- Formulario -->
+        <form [formGroup]="register" (submit)="Register()"  class="row g-0 needs-validation" novalidate>
           <div class="col me-1 form-floating mb-3">
-            <input type="text" class="form-control" placeholder="Nombre" id="name" aria-describedby="name">
-            <label for="name" class="form-label text-muted">Nombre</label>
+            <input [class.is-valid]="!RegisterNombre?.errors?.['required']" formControlName="nombre" type="text" class="form-control" placeholder="Nombre" id="name" aria-describedby="name">
+            <label for="name" class="form-label text-muted">
+              Nombre
+            </label>
           </div>
           <div class="col ms-1 form-floating mb-3">
-            <input type="text" class="form-control" placeholder="nombre@ejemplo.com" id="lastname" aria-describedby="lastname">
-            <label for="lastname" class="form-label text-muted">Apellido</label>
+            <input [class.is-valid]="!RegisterApellido?.errors?.['required']" formControlName="apellido" type="text" class="form-control form-control-sm" placeholder="nombre@ejemplo.com" id="lastname" aria-describedby="lastname">
+            <label for="lastname" class="form-label text-muted">
+              Apellido
+            </label>
           </div>
           <div class="col-md-12 form-floating mb-3">
-            <input type="email" class="form-control" placeholder="nombre@ejemplo.com" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <label for="exampleInputEmail1" class="form-label text-muted" >Email</label>
+            <input formControlName="email" type="mail" (input)="reinicio()" [class.is-invalid]="this.RegistroErroneo" [class.is-valid]="!RegisterEmail?.errors?.['required'] && !RegisterEmail?.errors?.['email']" class="form-control" placeholder="nombre@ejemplo.com" id="exampleInputEmail2" aria-describedby="emailHelp" required>
+            <label for="exampleInputEmail1" class="form-label text-muted" >
+              Email
+            </label>
+            <div class="invalid-tooltip start-50 translate-middle w-100 mt-3">
+              El email ya se encuentra registrado
+            </div>
           </div>
           <div class="col-md-12 form-floating mb-3">
-            <input type="password" class="form-control" placeholder="******" id="exampleInputPassword1">
+            <input formControlName="password" [class.is-invalid]="RegisterPassword?.errors?.['minlength']" [class.is-valid]="!RegisterPassword?.errors?.['minlength'] && !RegisterPassword?.errors?.['required']" type="password" class="form-control" placeholder="******" id="password" required>
             <label for="exampleInputPassword1" class="form-label text-muted">Contraseña</label>
+            <div class="invalid-tooltip start-50 translate-middle w-100 mt-3">La contraseña debe tener mas de 6 caracteres</div>
           </div>
-          <div class="">
-              <button type="submit" class="btn btn-primary w-100" data-bs-dismiss="modal">Registrarse</button>
+
+          <div class="mt-4">
+            <button [disabled]="register.invalid" type="submit" class="btn btn-primary w-100" data-bs-target="#messageModal" data-bs-toggle="modal" data-bs-dismiss="modal">
+              <div class="tamaño" *ngIf="!prueba">Registrarse</div>
+            </button>
           </div>
+
         </form>
         <div class="p-4 text-muted">
           <span class="iconify" data-icon="quill:userhappy" data-width="30" data-height="30"></span>
@@ -91,6 +135,86 @@
           <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="link-light text-decoration-none">Inicia sesión!</a>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="messageModal" aria-hidden="true"  aria-labelledby="messageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered d-flex justify-content-center">
+    <div class="modal-content  bg-dark" style="width: 430px; border-radius: 10px;">
+      <div class="modal-header p-2 dark-border">
+        
+          <button type="button" (click)="this.error=false" class="btn-close btn-close-white p-3" data-bs-dismiss="modal" aria-label="Close"></button>
+        
+      </div>
+      
+      <div *ngIf="this.loading" class="modal-body">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="this.RegistroErroneo" class="modal-body">
+  
+        <div class="d-flex justify-content-center">
+          <span class="iconify p-3" style="color: #dc3545;" data-icon="quill:warning-alt" data-width="100" data-height="100"></span>
+        </div>
+  
+        <div class="d-flex justify-content-center">
+          <div class="fs-4 p-2 fw-bold text-center">
+            El email ya se encuentra registrado
+          </div>
+        </div>
+        
+        <div class="d-flex p-3 justify-content-center">
+          <button type="submit" class="btn btn-danger" data-bs-target="#signupModal" data-bs-toggle="modal" data-bs-dismiss="modal">
+            <div class="tamaño">Volver</div>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="this.error" class="modal-body">
+  
+        <div class="d-flex justify-content-center">
+          <span class="iconify p-3" style="color: #dc3545;" data-icon="quill:warning-alt" data-width="100" data-height="100"></span>
+        </div>
+  
+        <div class="d-flex justify-content-center">
+          <div class="fs-4 p-2 fw-bold text-center">
+            Hubo un error en la comunicación
+          </div>
+        </div>
+        
+        <div class="d-flex p-3 justify-content-center">
+          <button (click)="this.error=false" type="submit" class="btn btn-danger" data-bs-target="#signupModal" data-bs-toggle="modal" data-bs-dismiss="modal">
+            <div class="tamaño">Volver</div>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="this.RegistroExitoso" class="modal-body">
+  
+        <div class="d-flex justify-content-center">
+          <span class="iconify p-3" style="color: #198754;" data-icon="quill:todo" data-width="110" data-height="110"></span>
+        </div>
+  
+        <div class="d-flex justify-content-center">
+          <div class="fs-4 p-2 fw-bold text-center">
+            Registro Exitoso
+          </div>
+        </div>
+        
+        <div class="d-flex p-3 justify-content-center">
+          <button (click)="reinicio()" type="submit" class="btn btn-success" data-bs-target="#loginModal" data-bs-toggle="modal" data-bs-dismiss="modal">
+            <div class="tamaño">Iniciar Sesión</div>
+          </button>
+        </div>
+      </div>
+
+        
+      
+
     </div>
   </div>
 </div>

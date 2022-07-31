@@ -1,0 +1,47 @@
+<div class="container border rounded-end rounded-bottom" style="border-color: #343a40 !important;">
+    <div class="row p-3 pb-0 align-items-center">
+        <div class="col-12 fs-4 p-3">
+            Actualizar informacion personal
+        </div>
+    </div>
+    
+    
+        <form [formGroup]="infoPersonal" (submit)="this.actualizarInfoPersonal()" class="px-3 row align-items-center">
+            <div class="col-12 mb-3">
+                <label for="urlimg" class="form-label">URL Foto de perfil</label>
+                <input type="url" formControlName="url_foto" class="form-control" id="urlimg">
+            </div>
+            <div class="col-4 mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input formControlName="nombre" type="name" [placeholder]="this.datosUsuario? this.datosUsuario.nombre : 'Juan'" class="form-control" id="nombre">
+            </div>
+            <div class="col mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" formControlName="apellido" [placeholder]="this.datosUsuario.apellido? this.datosUsuario.apellido : 'Peréz' " class="form-control" id="apellido">
+            </div>
+            <div class="col mb-3">
+                <label for="contraseniaCheck" class="form-label">Ocupacion</label>
+                <input type="text" formControlName="ocupacion" [placeholder]="this.datosUsuario.ocupacion? this.datosUsuario.ocupacion : 'Estudiante' " class="form-control" id="contraseniaCheck">
+            </div>
+            <div class="col-12 mb-3">
+                <label for="sobre-mi" class="form-label">
+                    Sobre mí
+                </label>
+                <textarea id="sobre-mi" formControlName="sobre_mi" [placeholder]="this.datosUsuario.sobre_mi? this.datosUsuario.sobre_mi : 'Una descripcion sobre vos :)'" class="form-control" style="height: 170px;"></textarea>
+            </div>
+            <div class="col-12 mt-2 mb-4 text-end">
+                <button [disabled]="infoPersonal.invalid" type="submit" class="btn btn-primary border-0 fs-6">
+                    Actualizar información personal
+                    <i class="ps-1 bi bi-pencil"></i>
+                </button>
+            </div>
+        </form>    
+</div>
+
+<div *ngIf="this.completo" [ngClass]="this.errorToast ? 'bg-danger' : 'bg-primary'" class="fake-toast m-3 align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{this.mensaje}}
+      </div>        
+    </div>
+  </div>

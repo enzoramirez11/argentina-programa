@@ -1,11 +1,11 @@
-<app-navabar></app-navabar>
+
 <!--Login box-->
-<app-login></app-login>
+
+  <app-navabar></app-navabar>
+  <app-login></app-login>
+
 <!--Pag principal-->
-<div  class="container" id="inicio"  style="background-image: url(./assets/img/code-gd18b69814_1280.jpg); background-size: cover; max-width: 95%; height: 400px; background-repeat: no-repeat;">
-</div>
-<div class="container-fluid pt-0" style="max-width:95%">
-  <app-encabezado ></app-encabezado>
-  <app-educacion id="educacion" ></app-educacion>
-  <app-skills id="skills"></app-skills>
+<div class="container-fluid px-0 pt-0">
+  <router-outlet>
+  </router-outlet>
 </div>

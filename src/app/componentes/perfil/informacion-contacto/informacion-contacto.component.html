@@ -1,0 +1,56 @@
+<div class="container border rounded-end rounded-bottom" style="border-color: #343a40 !important;">
+    <div class="row p-3 pb-0 align-items-center">
+        <div class="col-12 fs-4 p-3">
+            Actualizar informacion de contacto
+        </div>
+    </div>
+    
+    
+        <form [formGroup]="formContacto" (submit)="editarContacto()" class="px-3 row align-items-center">
+            <div class="col-4 mb-3">
+                <label for="nro_contacto" class="form-label">Número de contacto</label>
+                <input type="number" formControlName="nro_contacto" class="form-control" id="nro_contacto">
+            </div>
+            <div class="col-8 mb-3">
+                <label for="ciudad" class="form-label">Ciudad</label>
+                <input type="text" formControlName="ciudad" class="form-control" placeholder="Ciudad Autónoma de Buenos Aires" id="ciudad">
+            </div>
+            <div class="col-6 mb-3">
+                <label for="paises" class="form-label">País</label>
+                <select [(ngModel)]="paiss" formControlName="pais" (change)="this.pruebaa()" class="form-select" id="paises" name="pais" aria-label="Default select example">
+                    <option>{{this.seleccionar}}</option>
+                    <option  *ngFor="let pais of this.datos"  (value)="pais">{{pais}}</option>
+                </select>
+            </div>
+            <div class="col-6 mb-3">
+                <label for="estado" class="form-label">Provincia</label>
+                <select formControlName="provincia" name="estado" class="form-select" id="estado" aria-label="Default select example">
+                    <option [value]="this.seleccionar" selected>{{this.seleccionar}}</option>
+                    <option *ngFor="let estado of this.datosEstados" [value]="estado" >{{estado}}</option>
+                </select>
+            </div>
+            <h3>Redes Sociales</h3>
+            <div class="col-6 mb-3">
+                <label class="form-label">Linkedin</label>
+                <input formControlName="linkedin" type="url" class="form-control">
+            </div>
+            <div class="col-6 mb-3">
+                <label class="form-label">Github</label>
+                <input formControlName="github" type="url" class="form-control">
+            </div>
+            
+            <div class="col-12 mt-2 mb-4 text-end">
+                <button [disabled]="formContacto.invalid" type="submit" class="btn btn-primary border-0 fs-6">
+                    Actualizar información de contacto
+                    <i class="ps-1 bi bi-pencil"></i>
+                </button>
+            </div>
+        </form>    
+</div>
+<div *ngIf="this.completo" [ngClass]="this.errorToast ? 'bg-danger' : 'bg-primary'" class="fake-toast m-3 align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{this.mensaje}}
+      </div>        
+    </div>
+  </div>

@@ -1,35 +1,252 @@
-<div>
-    <div class="container-fluid">
-        <div>
-            <div class="my-2 fs-3 fw-bold text-center">
+<div class="px-4">
+        <hr>
+        <div [class.justify-content-end]="authService.logIn" [class.justify-content-center]="!authService.logIn" class="d-flex flex-row align-items-center position-relative" >
+            <div *ngIf="authService.logIn" class="flex-column fs-3 position-absolute start-50 top-50 translate-middle text-center fw-bold">
+                    Educacion
+            </div>
+            <div *ngIf="!authService.logIn" class="flex-column fs-3  text-center fw-bold">
                 Educacion
-            </div>
-            <hr>
         </div>
-        <div class="row justify-content-center">
-            <div *ngFor="let educacion of educacionList" class="col-lg-3 col-12 mb-4 card bg-dark text-center p-0 m-lg-3">
-                <div class="card-header justify-content-center px-4" style="height: 320px;">
-                    <!--Cambiar el modo de poner la imagen del certificado-->                    
-                    <img class="align-self-center card-image-top img-thumbnail m-lg-3 bg-dark rounded-circle " style="width: 125px; height: 125px;" [src]="educacion.img" alt="">
-                    <!--Cambiar el modo de poner la imagen del certificado -->
-                    <div class="fs-5 fw-bold text-center p-2" style="flex: 1 1 auto;">                   
-                        {{educacion.title}}
+            <div *ngIf="authService.logIn" class="flex-column">                            
+                <a *ngIf="!autEducacion" class="btn btn-success rounded-circle border-0 ms-auto fs-6"
+                    (click)="editarEducacion()">                    
+                    <i class="bi bi-pencil"></i>
+                </a>
+                <a *ngIf="autEducacion" class="btn btn-primary rounded-circle border-0 ms-2 fs-6"
+                    (click)="actEducacion()">                    
+                    <i class="bi bi-check-lg"></i>
+                </a>
+            </div>
+        </div>        
+        <hr>
+        <div class="container">
+            <div *ngIf="educacionList.length>0" class="row justify-content-center">
+                <div *ngFor="let educacion of educacionList" class="col-lg-3 col-10 mb-4 card bg-dark text-center p-0 mx-lg-1">
+                    <div class="card-header d-flex flex-column align-items-center px-2" style="height: 350px;">
+                        <!--Cambiar el modo de poner la imagen del certificado-->                    
+                        <div class="d-flex justify-content-center m-lg-3 align-items-center">
+                            <img *ngIf="educacion.url_img.length>0" class="align-self-center border-light flex flex-row card-image-top img-thumbnail bg-dark rounded-circle " style="width: 100px; height: 100px;" [src]="educacion.url_img" alt="">
+                            <div *ngIf="educacion.url_img.length<=0" class="border-light rounded-circle border d-flex align-items-center justify-content-center" style="height: 100px; aspect-ratio:1/1" >
+                                <i class="bi bi-book fs-2"></i>
+                            </div>
+                        </div>
+                        <!--Cambiar el modo de poner la imagen del certificado -->
+                        <div class="fs-5 fw-bold text-center p-2">                   
+                            {{educacion.titulo}}
+                        </div>
+                        <div class="fs-6 text-muted m-2 text-center d-flex">
+                            {{educacion.institucion}}
+                        </div> 
+                        <div class="fs-6 text-muted d-flex align-items-end m-2 text-center" style="flex: 1 1 auto">
+                            Año: {{educacion.fechaInicio}}{{educacion.fechaFin!=undefined ? " - "+ educacion.fechaFin : ''}}
+                        </div>                              
                     </div>
-                    <div class="fs-5 text-muted m-2 text-center">
-                        Año: {{educacion.year}}
-                    </div>                              
-                </div>
-                <div class="card-body">                    
-                    <div class="card-description opacity-75 p-4">
-                        {{educacion.description}}
+                    <div class="card-body">                    
+                        <div class="card-description opacity-75 py-4" style="font-size: 13px;">
+                            {{educacion.descripcion}}
+                        </div>
                     </div>
+                    <div *ngIf="educacion.url_cert.length>0" >
+                        <a *ngIf="!autEducacion" class="btn btn-success btn-sm w-100" role="button" target="_blank" rel="noopener noreferrer" [href]="educacion.link">Ver Credencial</a>
+                    </div>
+                    <form (submit)="eliminar(educacion.id)" *ngIf="autEducacion" class="card-footer gap-4 justify-content-center m-0" >
+                        <button class="btn btn-danger btn-sm w-100" type="submit">Eliminar</button>
+                    </form>
                 </div>
-                <div class="card-footer gap-4 justify-content-center m-0">
-                    <a class="btn btn-success btn-sm w-100" role="button" target="_blank" rel="noopener noreferrer" [href]="educacion.link">Ver Credencial</a>
+    
+                <div *ngIf="autEducacion && authService.logIn" class="col-lg-3 col-10 mb-4 card bg-dark text-center p-0 mx-lg-1">
+                    <div class="card-header d-flex flex-column align-items-center px-2" style="height: 350px;">
+                        <!--Cambiar el modo de poner la imagen del certificado-->                    
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div style="height: 100px; aspect-ratio: 1/1;" class="d-flex align-items-center justify-content-center rounded-circle border-light border m-lg-3">
+                                <i class="fs-2 bi bi-book"></i>
+                            </div>
+                        </div>
+                        
+                        <!--Cambiar el modo de poner la imagen del certificado -->
+                        <div class="fs-5 fw-bold text-center p-2" style="flex: 1 1 auto;">                   
+                            Titulo
+                        </div>
+                        <div class="fs-6 text-muted m-2 text-center d-flex">
+                            Institucion
+                        </div> 
+                        <div class="fs-6 text-muted d-flex align-items-end m-2 text-center">
+                            Año
+                        </div>                               
+                    </div>
+                    <div class="card-body">                    
+                        <div class="card-description opacity-75 py-4" style="font-size: 13px;">
+                            Descripcion
+                        </div>
+                    </div>
+                    <div class="card-footer gap-4 justify-content-center m-0">
+                        <a class="btn btn-primary btn-sm w-100" role="button" target="_blank" rel="noopener noreferrer" data-bs-toggle="modal" data-bs-target="#nuevoEduModal">
+                            Agregar
+                        </a>
+                    </div>                
                 </div>
-                
+            </div>
+            <div *ngIf="educacionList.length<=0" class="row justify-content-center p-5">
+                <div *ngIf="!autEducacion" class="text-center">
+                    Nada aún...
+                </div>
+                <div *ngIf="autEducacion && authService.logIn" class="col-lg-3 col-10 mb-4 card bg-dark text-center p-0 mx-lg-1">
+                    <div class="card-header d-flex flex-column align-items-center px-2" style="height: 350px;">
+                        <!--Cambiar el modo de poner la imagen del certificado-->                    
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div style="height: 100px; aspect-ratio: 1/1;" class="d-flex align-items-center justify-content-center rounded-circle border-light border m-lg-3">
+                                <i class="fs-2 bi bi-book"></i>
+                            </div>
+                        </div>
+                        
+                        <!--Cambiar el modo de poner la imagen del certificado -->
+                        <div class="fs-5 fw-bold text-center p-2" style="flex: 1 1 auto;">                   
+                            Titulo
+                        </div>
+                        <div class="fs-6 text-muted m-2 text-center d-flex">
+                            Institucion
+                        </div> 
+                        <div class="fs-6 text-muted d-flex align-items-end m-2 text-center">
+                            Año
+                        </div>                               
+                    </div>
+                    <div class="card-body">                    
+                        <div class="card-description opacity-75 py-4" style="font-size: 13px;">
+                            Descripcion
+                        </div>
+                    </div>
+                    <div class="card-footer gap-4 justify-content-center m-0">
+                        <a class="btn btn-primary btn-sm w-100" role="button" target="_blank" rel="noopener noreferrer" data-bs-toggle="modal" data-bs-target="#nuevoEduModal">Agregar</a>
+                    </div>                
+                </div>
             </div>
         </div>
-        
-    </div>
 </div>
+<!--Modal-->
+<div class="modal fade" id="nuevoEduModal" tabindex="-1" aria-labelledby="nuevoEduModal" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content bg-dark">
+        <div class="modal-header" style="border-color: #343a40;">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar educacion</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button [hidden]="true" id="cerrarModall" data-bs-dismiss="modal">cerrar</button>
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-between">
+            
+                <div class="card col-4 bg-dark text-center mx-2 p-0">
+                    <div class="card-header d-flex flex-column align-items-center justify-content-center px-2" style="height: 270px;">
+                        <!--Cambiar el modo de poner la imagen del certificado-->                    
+                        <div *ngIf="this.img" class="d-flex justify-content-center align-items-center">
+                            <div style="height: 100px; aspect-ratio: 1/1;" class="d-flex align-items-center justify-content-center rounded-circle border-light border m-lg-3">
+                                <i class="fs-2 bi bi-person-square"></i>
+                            </div>
+                        </div>
+                        <img *ngIf="!this.img" class="color-light align-self-center d-flex flex-row card-image-top img-thumbnail m-lg-3 bg-light rounded-circle" onerror="this.src='./assets/img/person.svg'" style="width: 100px; height: 100px;" [src]="this.urlImagenNuevo" alt="que ondas">
+                        
+                        <!--Cambiar el modo de poner la imagen del certificado -->
+                        <div class="fs-5 fw-bold text-center p-2" style="flex: 1 1 auto;">                   
+                            {{this.tituloNuevo ==='' ? 'Titulo' : this.tituloNuevo }}
+                        </div>
+                        <div class="fs-6 text-muted m-2 text-center d-flex">
+                            {{this.institucionNuevo==='' ? 'Institucion' : this.institucionNuevo }}
+                        </div> 
+                        <div class="fs-6 text-muted m-2 text-center d-flex">
+                            Año: {{this.anioNuevo}} <div *ngIf="this.aaa" class="ps-1">- En curso</div> <div *ngIf="!this.aaa && anioF()" class="ps-1">- {{this.anioFin}}</div>
+                        </div>                              
+                    </div>
+                    <div class="card-body">                    
+                        <div class="card-description opacity-75 py-4" style="font-size: 13px;">
+                            {{this.descripcionNuevo==='' ? 'Descripcion' : this.descripcionNuevo}}
+                        </div>
+                    </div>
+                    <div *ngIf="!this.aaa" class="card-footer gap-4 justify-content-center m-0">
+                        <a class="btn btn-success btn-sm w-100" role="button" target="_blank" rel="noopener noreferrer">Ver certificado</a>
+                    </div>                
+                </div>
+            
+
+            <div class="col px-3">
+                <form [formGroup]="estudiosForm" (submit)="agregarEd()" id="myForm" class="h-100">
+                    <div class="row">
+                        <div class="col-lg-5 col-12 mb-2">
+                            <label for="titulo" class="form-label">
+                                Titulo
+                            </label>
+                            <input [class.is-valid]="!this.estudiosForm.get('titulo')?.errors?.['required']" formControlName="titulo" autocomplete="off" (input)="this.tituloNuevo=getValue($event)" type="text" class="form-control"> 
+                        </div>
+                        <div class="col-lg-7 col-12 mb-2">
+                            <label for="titulo" class="form-label">
+                                Institución
+                            </label>
+                            <input [class.is-valid]="!this.estudiosForm.get('institucion')?.errors?.['required']" formControlName="institucion" autocomplete="off" (input)="this.institucionNuevo=getValue($event)" type="text" class="form-control" > 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mb-2">
+                            <label for="titulo" class="form-label">
+                                URL de la imagen
+                            </label>
+                            <input formControlName="imgUrl" autocomplete="off" (input)="this.urlImagenNuevo=getValue($event)" type="text" class="form-control" > 
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-12 mb-2">
+                            <label for="fechaInic" class="form-label">
+                                Año inicio
+                            </label>
+                            <input formControlName="fechaInic" required autocomplete="off" value="2000" (input)="this.anioNuevo=getValue($event)" type="number" class="form-control">
+                        </div>
+                        <div class="col-lg-6 col-12 mb-2">
+                            <label for="fechaFin" class="form-label">
+                                Año de finilizacion (Opcional)
+                            </label>
+                            <input formControlName="fechaFin" [disabled]="this.aaa" value="2001" (input)="this.anioFin=getValue($event)" required autocomplete="off" type="number" class="form-control">
+                        </div>                         
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mb-2">
+                            <div class="form-check">
+                                <input (change)="onCheckbox()" class="form-check-input" type="checkbox" id="gridCheck">
+                                <label class="form-check-label" for="gridCheck">
+                                  En curso
+                                </label>
+                              </div>                           
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mb-2">
+                            <label  class="form-label">
+                                Descripcion
+                            </label>
+                            <textarea [class.is-valid]="!this.estudiosForm.get('descripcion')?.errors?.['required']" formControlName="descripcion" class="form-control" (input)="this.descripcionNuevo=getValue($event)"></textarea>
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mb-2">
+                            <label for="titulo" class="form-label">URL Certificado (opcional)</label>
+                            <input formControlName="urlCert" [disabled]="this.aaa" autocomplete="off" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                  </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="border-color: #343a40;">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+          <button [disabled]="estudiosForm.invalid" type="submit" form="myForm" class="btn btn-primary">Crear</button>
+        </div>
+      </div>
+    </div>
+
+    
+
+</div>
+  <div *ngIf="this.completo" class="fake-toast m-3 align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Se registro el estudio con exito
+      </div>        
+    </div>
+  </div>

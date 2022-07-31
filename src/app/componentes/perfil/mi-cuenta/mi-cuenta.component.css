@@ -1,3 +1,7 @@
+.border-tab {
+    border-color: #343a40 !important;
+}
+
 @keyframes desvanecer {
     0% { opacity: 0;}
     30% { opacity: 1}

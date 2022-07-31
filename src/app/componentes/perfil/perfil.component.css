@@ -1,0 +1,23 @@
+.dark-tab {
+    background-color: #212529 !important;
+    color: rgb(248, 249, 250) !important;
+    border-bottom-color:#343a40 !important;
+    border-bottom: 1px solid ;
+    border-left: 1px solid #343a40 !important;
+    text-decoration: none;
+    position: relative;
+    display: block;
+    
+}
+.dark-tab:hover {
+    background-color: #272b30 !important;
+    transition: background-color 200ms linear;
+}
+.dark-tab:focus , .dark-tab:active, .is-active {
+    background-color: #0059b3 !important;
+    color: rgb(248, 249, 250) !important;
+}
+
+.is-active:hover {
+    background-color: #004f9d !important;
+}

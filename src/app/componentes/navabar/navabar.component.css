@@ -13,5 +13,7 @@
     background: none;
 }
 .navbar {
-    border-bottom: 1px solid #343a40;
+    border-bottom: 1px solid;
+    border-bottom-color: #343a40;
 }
+

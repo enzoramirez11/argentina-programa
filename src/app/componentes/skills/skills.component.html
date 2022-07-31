@@ -1,19 +1,132 @@
-<hr>
-<div class=" my-2 fs-3 fw-bold text-center">
-    Skills
-</div>
+<div class="px-3">
+    <hr>
+<div [class.justify-content-end]="authService.logIn" [class.justify-content-center]="!authService.logIn" class="d-flex flex-row align-items-center position-relative" >
+    <div *ngIf="authService.logIn" class="flex-column fs-3 position-absolute start-50 top-50 translate-middle text-center fw-bold">
+            Tecnologias
+    </div>
+    <div *ngIf="!authService.logIn" class="flex-column fs-3 text-center fw-bold">
+        Tecnologias
+    </div>
+    <div *ngIf="authService.logIn " class="flex-column">
+        <a *ngIf="actSkill" class="btn btn-success rounded-circle border-0 ms-auto fs-6" (click)="this.actSkills()">
+            <i class="bi bi-pencil"></i>
+        </a>
+        <a *ngIf="!actSkill" class="btn btn-primary rounded-circle border-0 ms-auto fs-6" (click)="this.actSkills()">
+            <i class="bi bi-check-lg"></i>
+        </a>
+    </div>
+</div> 
 <hr>
 <div class="container">
-    <div class="row justify-content-center">
-        <div [id]="skill.id" (click)="funcionDePrueba(this.skill)" class="col-lg-2 col-8 p-4 m-3 text-center card-header card-skill" *ngFor="let skill of skillList">
-            <img class="bg-dark p-0" [src]="skill.img" style="height: 100px; width: 100px;">
+    <div *ngIf="tecnologiaList.length>0" class="row justify-content-center">
+        <div class="col-lg-2 col-5 p-4 m-3 text-center card-header card-skill" *ngFor="let tecno of tecnologiaList">
+            <img *ngIf="tecno.url_img.length>0" class="bg-dark p-0" [src]="tecno.url_img" style="height: 100px; width: 100px;">
+            <div *ngIf="tecno.url_img.length<=0" class="border-light rounded-circle border m-auto d-flex justify-content-center align-items-center" style="height: 100px; aspect-ratio:1/1" >
+                <i class="bi bi-book fs-2"></i>
+            </div>
             <div class="fs-5 fw-bold my-2">
-                {{skill.name}}
+                {{tecno.titulo}}
             </div>
             <div class="progress">
-                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" [attr.aria-valuenow]="skill.progress" aria-valuemin="0" aria-valuemax="100" [attr.style]="skill.progresspercentage"></div>
+                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" [attr.aria-valuenow]="tecno.nivel" aria-valuemin="0" aria-valuemax="100" [style.width.%]="tecno.nivel"></div>
               </div>
+              <button (click)="eliminarTecnologia(tecno.id)" *ngIf="!actSkill" class="btn w-100 btn-sm btn-danger mt-3">
+                Borrar
+            </button>
         </div>
-
+        <div *ngIf="!actSkill" class="col-lg-2 col-5 p-4 m-3 text-center card-header card-skill ">
+            <div class="border-light rounded-circle border m-auto d-flex justify-content-center align-items-center" style="height: 100px; aspect-ratio:1/1" >
+                <i class="bi bi-book fs-2"></i>
+            </div>
+            <div class="fs-5 fw-bold my-2">
+                Titulo
+            </div> 
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 70%" ></div>
+            </div>
+            <button data-bs-toggle="modal" data-bs-target="#skills_modal" class="btn btn-primary btn-sm w-100 mt-3">
+                Agregar
+            </button>
+        </div>
     </div>
+    <div *ngIf="tecnologiaList.length<=0" class="row justify-content-center p-5 text-center">
+        <div *ngIf="actSkill">
+            Nada aún...
+        </div>
+        <div *ngIf="!actSkill" class="col-lg-2 col-5 p-4 m-3 text-center card-header card-skill ">
+            <div class="border-light rounded-circle border m-auto d-flex justify-content-center align-items-center" style="height: 100px; aspect-ratio:1/1" >
+                <i class="bi bi-book fs-2"></i>
+            </div>
+            <div class="fs-5 fw-bold my-2">
+                Titulo
+            </div> 
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: 70%" ></div>
+            </div>
+            <button data-bs-toggle="modal" data-bs-target="#skills_modal" class="btn btn-primary btn-sm w-100 mt-3">
+                Agregar
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+<div class="modal fade" id="skills_modal" tabindex="-1" aria-labelledby="skills_modal" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content bg-dark">
+        <div class="modal-header" style="border-color: #343a40;">
+          <h5 class="modal-title" id="exampleModalLabel">Agregar skill</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-6 p-4 m-3 text-center card-header card-skill ">
+                <div class="border-light rounded-circle border m-auto d-flex justify-content-center align-items-center" style="height: 100px; aspect-ratio:1/1" >
+                    <i class="bi bi-book fs-2"></i>
+                </div>
+                <div class="fs-5 fw-bold mt-2 mb-3">
+                    {{this.titulo.length>0 ? this.titulo : 'Titulo'}}
+                </div> 
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100" [style.width.%]="this.nivel" ></div>
+                </div>
+            </div>
+            <div class="col-lg col-11 px-3">
+                <form [formGroup]="tecnologiaForm" (submit)="agregarTecnologia()" id="tecnologiaForm" class="h-100">
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">
+                                URL Imagen
+                            </label>
+                            <input (input)="this.url_img=getValue($event)" class="form-control" type="url" autocomplete="off" formControlName="url_img">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="titulo" class="form-label">
+                                Titulo
+                            </label>
+                            <input formControlName="titulo" (input)="this.titulo=getValue($event)" formControlName="titulo" autocomplete="off" type="text" class="form-control"> 
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="customRange1" class="form-label">Nivel {{this.nivel.length>0 && this.nivel!='0' ? '('+this.nivel+'%)' : ''}}</label>
+                            <input formControlName="nivel" min="0" max="100" (input)="this.nivel=getValue($event)" value="0" type="range" class="form-range" id="customRange1" >
+                        </div>
+                    </div>
+                  </form>
+                  
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="border-color: #343a40;">
+            <button [disabled]="tecnologiaForm.invalid" form="tecnologiaForm" type="submit" class="btn btn-success">
+                Añadir
+            </button>
+          </div>
+      </div>
+    </div>
+
+    
+
 </div>

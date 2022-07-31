@@ -9,6 +9,13 @@ import { EducacionComponent } from './componentes/educacion/educacion.component'
 import { LoginComponent } from './componentes/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SkillsComponent } from './componentes/skills/skills.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PerfilComponent } from './componentes/perfil/perfil.component';
+import { InicioComponent } from './componentes/inicio/inicio.component';
+import { ContactoComponent } from './componentes/contacto/contacto.component';
+import { MiCuentaComponent } from './componentes/perfil/mi-cuenta/mi-cuenta.component';
+import { InformacionPersonalComponent } from './componentes/perfil/informacion-personal/informacion-personal.component';
+import { InformacionContactoComponent } from './componentes/perfil/informacion-contacto/informacion-contacto.component';
 
 @NgModule({
   declarations: [
@@ -17,11 +24,19 @@ import { SkillsComponent } from './componentes/skills/skills.component';
     EncabezadoComponent,
     EducacionComponent,
     LoginComponent,
-    SkillsComponent
+    SkillsComponent,
+    PerfilComponent,
+    InicioComponent,
+    ContactoComponent,
+    MiCuentaComponent,
+    InformacionPersonalComponent,
+    InformacionContactoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
   ],
   providers: [],

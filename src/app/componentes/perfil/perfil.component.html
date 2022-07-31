@@ -1,0 +1,25 @@
+<div class="container mt-3">
+    <h2>Mi perfil</h2>
+    <p>Aca podrás editar tu cuenta, tuinformacion personal y tu información de contacto.</p>
+
+    <div class="row">
+        <div class="col-lg-3 col-12 px-0">
+            <div class="list-group flex-lg-column rounded-0 flex-row" style="border-top: 1px solid #343a40 !important; border-right: 1px solid #343a40;">
+                <a routerLink="mi-cuenta" [routerLinkActive]="['is-active']" class="p-3 flex-fill dark-tab" style="border-top-color: #343a40 !important;" aria-current="true">
+                  Mi cuenta
+                </a>
+                <a routerLink="informacion-personal" [routerLinkActive]="['is-active']" class="p-3 flex-fill dark-tab">
+                    Informacion personal
+                </a>
+                <a routerLink="informacion-contacto" [routerLinkActive]="['is-active']" class="p-3 flex-fill dark-tab">
+                    Informacion de contacto
+                </a>
+              </div>
+        </div>
+        <div class="col-lg col-12 px-0">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+
+</div>
